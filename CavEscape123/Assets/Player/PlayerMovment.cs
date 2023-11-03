@@ -5,34 +5,39 @@ using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
-    private Rigidbody2D rigidBody;
+    private Rigidbody2D rigB;
+    private BoxCollider2D bColl;
     private Animator anim;
     private SpriteRenderer sprite;
 
     private float dirX = 0;
     [SerializeField] private float moveSpeed = 12;
     [SerializeField] private float jumpForce = 13;
+    [SerializeField] private LayerMask jumpGround;
 
-    private enum MovementState { idle,running, jumping, falling, trancition };
+    private enum MovementState { idle,running, jumping, falling, trancition};
 
     private void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
+        rigB = GetComponent<Rigidbody2D>();
+        bColl = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        
     }
 
 
     private void Update()
     {
         dirX = Input.GetAxis("Horizontal");
-        rigidBody.velocity = new Vector2(dirX * moveSpeed, rigidBody.velocity.y);
-        if (Input.GetButtonDown("Jump"))
+        rigB.velocity = new Vector2(dirX * moveSpeed, rigB.velocity.y);
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+            rigB.velocity = new Vector2(rigB.velocity.x, jumpForce);
         }
         UpdatteAnimationState();
     }
+
     private void UpdatteAnimationState ()
     {
         MovementState state;
@@ -51,23 +56,28 @@ public class PlayerMovment : MonoBehaviour
             state = MovementState.idle;
         }
 
-        if(rigidBody.velocity.y > 1)
+        if(rigB.velocity.y > 5)
         {
             state = MovementState.jumping;
         }
-        else if(rigidBody.velocity.y > 0.1 && rigidBody.velocity.y < 5)
+        else if(rigB.velocity.y > 0.01 && rigB.velocity.y < 5)
         {
             state = MovementState.trancition;
         }
-        else if (rigidBody.velocity.y <- 0.1 && rigidBody.velocity.y >- 4)
+        else if (rigB.velocity.y <- 0.01 && rigB.velocity.y >- 4)
         {
             state = MovementState.trancition;
         }
-        else if (rigidBody.velocity.y < -0.1)
+        else if (rigB.velocity.y < -4)
         {
             state = MovementState.falling;
         }
 
         anim.SetInteger("state", (int)state);
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.BoxCast(bColl.bounds.center, bColl.bounds.size, 0, Vector2.down, 0.1f, jumpGround);
     }
 }
