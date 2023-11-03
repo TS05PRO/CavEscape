@@ -15,7 +15,7 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] private float jumpForce = 13;
     [SerializeField] private LayerMask jumpGround;
 
-    private enum MovementState { idle,running, jumping, falling, trancition};
+    private enum MovementState { idle,running, jumping, falling, trancition, spawn};
 
     private void Start()
     {
@@ -56,19 +56,19 @@ public class PlayerMovment : MonoBehaviour
             state = MovementState.idle;
         }
 
-        if(rigB.velocity.y > 5)
+        if(rigB.velocity.y > 4)
         {
             state = MovementState.jumping;
         }
-        else if(rigB.velocity.y > 0.01 && rigB.velocity.y < 5)
+        else if(rigB.velocity.y > 0.01 && rigB.velocity.y < 4)
         {
             state = MovementState.trancition;
         }
-        else if (rigB.velocity.y <- 0.01 && rigB.velocity.y >- 4)
+        else if (rigB.velocity.y <- 0.01 && rigB.velocity.y >- 3.5)
         {
             state = MovementState.trancition;
         }
-        else if (rigB.velocity.y < -4)
+        else if (rigB.velocity.y < -3.5)
         {
             state = MovementState.falling;
         }
