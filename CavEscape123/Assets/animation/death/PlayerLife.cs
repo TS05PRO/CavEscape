@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigB;
     private Animator anim;
 
+    [SerializeField] private AudioSource deathSound;
+    [SerializeField] private AudioSource spawnSound;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -18,6 +21,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Trap"))
         {
             Die();
+            deathSound.Play();
+
         }
     }
 
@@ -29,5 +34,6 @@ public class Player : MonoBehaviour
     private void ResttartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        spawnSound.Play();
     }
 }
