@@ -19,6 +19,8 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] private AudioSource runingSound;
     private enum MovementState { idle,running, jumping, falling, trancition, spawn};
 
+    bool stopRuningSound = false;
+
     private void Start()
     {
         rigB = GetComponent<Rigidbody2D>();
@@ -44,7 +46,7 @@ public class PlayerMovment : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-            runingSound.Pause();
+            stopRuningSound = true;
         }
     }
 
@@ -96,7 +98,7 @@ public class PlayerMovment : MonoBehaviour
             runSound = false;
 
         }
-        if (runSound == true)
+        if (runSound == true && stopRuningSound == false)
         {
             if (!runingSound.isPlaying)
             {
