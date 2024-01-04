@@ -16,11 +16,11 @@ public class finish : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "Player" && end)
+        if(collision.gameObject.name == "Plarer" && end == true)
         {
             end = false;
             finishSound.Play();
-            Invoke("CompleateLevel", 1f);
+            Invoke("CompleateLevel", 1.1f);
         }
     }
 
