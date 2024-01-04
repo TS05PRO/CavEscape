@@ -35,8 +35,8 @@ TagManager:
   - 
   - 
   - here
-  - 
-  - 
+  - hej
+  - "p\xE5"
   - 
   m_SortingLayers:
   - name: Backgrounds Place Holder
@@ -47,4 +47,10 @@ TagManager:
     locked: 0
   - name: Terrain Place Holder
     uniqueID: 3431738687
+    locked: 0
+  - name: Hej
+    uniqueID: 1721604477
+    locked: 0
+  - name: "p\xE5"
+    uniqueID: 3967485553
     locked: 0
